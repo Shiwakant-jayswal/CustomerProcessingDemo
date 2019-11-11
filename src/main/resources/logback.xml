@@ -1,0 +1,32 @@
+<configuration>
+ <property name="LOG_PATH" value="${KOKILA_HOME}/Kokila/logs/cpa" />
+
+ <appender name="KokilaFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<Append>true</Append>
+	<file>${LOG_PATH}/cpa.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- rollover daily -->
+      <fileNamePattern>${LOG_PATH}/cpa-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <maxFileSize>100MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+    </rollingPolicy>
+	<encoder>
+      <pattern>%d %5p%d %5p [%t] %c [Msisdn:%mdc{msisdn}|TransactionID:%mdc{transactionId}] - %m%n</pattern>
+    </encoder>
+ </appender>
+ 
+ 
+ <logger name="com.viva" level="INFO" additivity="false">
+    <appender-ref ref="KokilaFileAppender"/>
+ </logger>
+ 
+ <logger name="com.viva.service" level="INFO" additivity="false">
+    <appender-ref ref="KokilaFileAppender"/>
+ </logger>
+  
+ 
+ 
+ <root level="ERROR"/>
+</configuration> 
